@@ -1,5 +1,5 @@
-import $ from 'jquery';
-import Rx from 'rxjs/Rx';
+//import $ from 'jquery';
+//import Rx from 'rxjs/Rx';
 
 /*
 When dealing with a nested data structure,
@@ -55,15 +55,15 @@ below the image
 var controls = Object.create(null);
 
 function createPaint(parent) {
-  var canvas = createHTMLElementByName('canvas', {width: 500, height: 300});
+  var canvas = createHTMLElementByName('canvas', {width: 900, height: 600, style: 'border:1px solid #cfd1d3'});
   var cx = canvas.getContext('2d');
-  var toolbar = createHTMLElementByName('div', {class: 'toolbar'}, 'TOOLBAR');
+  var toolbar = createHTMLElementByName('div', {class: 'toolbar'});
   for (var name in controls) {
     if (name) {
       toolbar.appendChild(controls[name](cx));
     }
   }
-  var panel = createHTMLElementByName('div', {class: 'picturepanel'}, canvas, 'PANEL');
+  var panel = createHTMLElementByName('div', {class: 'picturepanel'}, canvas);
   parent.appendChild(createHTMLElementByName('div', null, panel, toolbar));
 }
 
@@ -84,5 +84,51 @@ controls.tool = function (cx) {
       }
     });
   }
-  return createHTMLElementByName('span', null, 'Tool: ', select);
+  return createHTMLElementByName('span', null, 'Tool :  ', select);
 };
+
+function relativePos(event, element) {
+  var rect = element.getBoundingClientRect();
+  return {x: Math.floor(event.clientX - rect.left),
+          y: Math.floor(event.clientY - rect.top)};
+}
+
+function trackDrag(onMove, onEnd) {
+  function end(event) {
+    removeEventListener('mousemove', onMove);
+    removeEventListener('mouseup', end);
+    if (onEnd) {
+      onEnd(event);
+    }
+  }
+  addEventListener('mousemove', onMove);
+  addEventListener('mouseup', end);
+}
+
+tools.Line = function (event, cx, onEnd) {
+  cx.lineCap = 'round';
+
+  var pos = relativePos(event, cx.canvas);
+  trackDrag(function (e) {
+    cx.beginPath();
+    cx.moveTo(pos.x, pos.y);
+    pos = relativePos(e, cx.canvas);
+    cx.lineTo(pos.x, pos.y);
+    cx.stroke();
+  }, onEnd);
+};
+
+tools.Erase = function (event, cx) {
+  cx.globalCompositeOperation = 'destination-out';
+  tools.Line(event, cx, function () {
+    cx.globalCompositeOperation = 'source-over';
+  });
+};
+
+tools.cool = function (event, cx) {
+  console.log('Cool!');
+};
+
+createPaint(document.body);
+console.log(tools);
+
