@@ -55,7 +55,8 @@ below the image
 var controls = Object.create(null);
 
 function createPaint(parent) {
-  var canvas = createHTMLElementByName('canvas', {width: 900, height: 600, style: 'border:1px solid #cfd1d3'});
+  var canvas = createHTMLElementByName('canvas',
+                {width: 900, height: 600, style: 'border:1px solid #cfd1d3'});
   var cx = canvas.getContext('2d');
   var toolbar = createHTMLElementByName('div', {class: 'toolbar'});
   for (var name in controls) {
@@ -125,10 +126,15 @@ tools.Erase = function (event, cx) {
   });
 };
 
-tools.cool = function (event, cx) {
-  console.log('Cool!');
+controls.color = function (cx) {
+  var input = createHTMLElementByName('input', {type: 'color'});
+  input.addEventListener('change', function () {
+    cx.fillStyle = input.value;
+    cx.StrokeStyle = input.value;
+  });
+  return createHTMLElementByName('span', null,' Color : ', input);
 };
 
 createPaint(document.body);
-console.log(tools);
+//console.log(tools);
 
