@@ -74,6 +74,7 @@ var tools = Object.create(null);
 
 controls.tool = function (cx) {
   var select = createHTMLElementByName('select', null);
+  var pWrap = createHTMLElementByName('p', null, 'Tool');
   for (var tool in tools) {
     if (tool) {
       select.appendChild(createHTMLElementByName('option', null, tool));
@@ -85,7 +86,7 @@ controls.tool = function (cx) {
       }
     });
   }
-  return createHTMLElementByName('span', null, 'Tool :  ', select);
+  return createHTMLElementByName('span', null, '', pWrap, select);
 };
 
 function relativePos(event, element) {
@@ -120,6 +121,9 @@ tools.Line = function (event, cx, onEnd) {
 };
 
 tools.Erase = function (event, cx) {
+  if (cx.lineWidth < 5) {
+    cx.lineWidth = 10;
+  }
   cx.globalCompositeOperation = 'destination-out';
   tools.Line(event, cx, function () {
     cx.globalCompositeOperation = 'source-over';
@@ -128,11 +132,28 @@ tools.Erase = function (event, cx) {
 
 controls.color = function (cx) {
   var input = createHTMLElementByName('input', {type: 'color'});
+  var pWrap = createHTMLElementByName('p', null, 'Color');
   input.addEventListener('change', function () {
     cx.fillStyle = input.value;
-    cx.StrokeStyle = input.value;
+    cx.strokeStyle = input.value;
   });
-  return createHTMLElementByName('span', null,' Color : ', input);
+  return createHTMLElementByName('span', null, '', pWrap, input);
+};
+
+controls.brushSize = function (cx) {
+  var select = createHTMLElementByName('select',null);
+  var sizes = [1, 2, 3, 5, 8, 12, 25, 35, 50, 75, 100];
+
+  sizes.forEach(function (size) {
+    select.appendChild(createHTMLElementByName('option', {value: size}, size + ' pixels'));
+  });
+
+  select.addEventListener('change', function (event) {
+    cx.lineWidth = select.value;
+  });
+
+  var pWrap = createHTMLElementByName('p', null, 'Brush Size');
+  return createHTMLElementByName('span', null, '', pWrap, select);
 };
 
 createPaint(document.body);
