@@ -56,7 +56,7 @@ var controls = Object.create(null);
 
 function createPaint(parent) {
   var canvas = createHTMLElementByName('canvas',
-                {width: 900, height: 600, style: 'border:1px solid #cfd1d3'});
+                {width: 900, height: 500, style: 'border:1px solid #cfd1d3'});
   var cx = canvas.getContext('2d');
   var toolbar = createHTMLElementByName('div', {class: 'toolbar'});
   for (var name in controls) {
@@ -204,7 +204,8 @@ controls.openFile = function (cx) {
       loadImageURL(cx, reader.result);
     });
   });
-  return createHTMLElementByName('span', null, pWrap, input);
+  var hr = createHTMLElementByName('hr');
+  return createHTMLElementByName('span', null, hr, pWrap, input);
 };
 
 createPaint(document.body);
