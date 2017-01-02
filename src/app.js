@@ -156,6 +156,26 @@ controls.brushSize = function (cx) {
   return createHTMLElementByName('span', null, '', pWrap, select);
 };
 
+controls.save = function (cx) {
+  var link = createHTMLElementByName('a', {href: '/', class: 'btn btn-default'}, ' Save ');
+  function update() {
+    try {
+      link.href = cx.canvas.toDataURL();
+    } catch (error) {
+      if (error instanceof SecurityError) {
+        link.href = 'javascript:alert(' +
+                  JSON.stringify('Cant save: ' + e.toString()) + ')';
+      }
+      else {
+        throw error;
+      }
+    }
+  }
+  link.addEventListener('mouseover', update);
+  link.addEventListener('focus', update);
+  return link;
+};
+
 createPaint(document.body);
 //console.log(tools);
 
