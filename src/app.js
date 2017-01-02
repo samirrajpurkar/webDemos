@@ -176,6 +176,24 @@ controls.save = function (cx) {
   return link;
 };
 
-createPaint(document.body);
+function loadImageURL(cx, url) {
+  var image = document.createElement('img');
+  image.addEventListener('load', function (event) {
+    var color = cx.fillStyle;
+    var size = cx.lineWidth;
+    cx.canvas.width = image.width;
+    cx.canvas.height = image.height;
+    cx.drawImage(image, 0, 0);
+    cx.fillStyle = color;
+    cx.strokeStyle = color;
+    cx.lineWidth = size;
+  });
+  image.src = 'url';
+}
+
+controls.openFile = function (cx) {
+
+};
+//createPaint(document.body);
 //console.log(tools);
 
