@@ -188,12 +188,25 @@ function loadImageURL(cx, url) {
     cx.strokeStyle = color;
     cx.lineWidth = size;
   });
-  image.src = 'url';
+  image.src = url;
 }
 
 controls.openFile = function (cx) {
-
+  var pWrap = createHTMLElementByName('p', null, 'Open File :');
+  var input = createHTMLElementByName('input', {type: 'file'});
+  input.addEventListener('change', function (event) {
+    if (input.files.length === 0) {
+      return;
+    }
+    var reader = new FileReader();
+    reader.readAsDataURL(input.files[0]);
+    reader.addEventListener('load', function (event2) {
+      loadImageURL(cx, reader.result);
+    });
+  });
+  return createHTMLElementByName('span', null, pWrap, input);
 };
-//createPaint(document.body);
+
+createPaint(document.body);
 //console.log(tools);
 
