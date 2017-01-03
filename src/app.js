@@ -208,6 +208,25 @@ controls.openFile = function (cx) {
   return createHTMLElementByName('span', null, hr, pWrap, input);
 };
 
+controls.openURL = function (cx) {
+  var label = createHTMLElementByName('label', null, ' Open URL : ');
+  var input = createHTMLElementByName('input', {type: 'text', class: 'form-control'});
+  var button = createHTMLElementByName('button', {type: 'submit',
+                                                  class: 'btn btn-secondary'}, 'Load');
+  var div_form_group = createHTMLElementByName('div', {class: 'form-group'},label,input);
+  var form = createHTMLElementByName('form', {class: 'form-inline'},
+                                        div_form_group,
+                                        button);
+
+  form.addEventListener('submit', function (event) {
+    event.preventDefault();
+    loadImageURL(cx, input.value);
+  });
+
+  var hr = createHTMLElementByName('hr');
+  return createHTMLElementByName('span', null, hr, form);
+};
+
 createPaint(document.body);
 //console.log(tools);
 
