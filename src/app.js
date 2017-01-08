@@ -129,7 +129,7 @@ tools.Erase = function (event, cx) {
     cx.globalCompositeOperation = 'source-over';
   });
 };
-
+/*
 tools.Text = function (event, cx) {
   var text = prompt('Text:', '');
   if (text) {
@@ -138,7 +138,7 @@ tools.Text = function (event, cx) {
     cx.fillText(text, pos.x, pos.y);
   }
 };
-
+*/
 controls.color = function (cx) {
   var input = createHTMLElementByName('input', {type: 'color'});
   var pWrap = createHTMLElementByName('p', null, 'Color');
@@ -235,7 +235,49 @@ controls.openURL = function (cx) {
   var hr = createHTMLElementByName('hr');
   return createHTMLElementByName('span', null, hr, form);
 };
-
-createPaint(document.body);
+//createPaint(document.body);
 //console.log(tools);
+
+//THE SECRET LIFE OF OBJECTS
+// var rabbit = {};
+// rabbit.speak = function (line) {
+//   console.log('The rabbit says -> ' + line);
+// };
+// rabbit.speak('Ha ha I am here');
+function speak(line) {
+  console.log('The ' + this.type + ' rabbit says ' + line + ' ');
+}
+var whiteRabbit = {type: 'white', speak: speak};
+var fatRabbit = {type: 'fat', speak: speak};
+whiteRabbit.speak('Oh my ears and whiskers, ' + 'how late its getting');
+fatRabbit.speak('I could sure use a carrot right now.');
+
+speak.apply(fatRabbit, ['Burp!']);
+speak.call({type: 'old'}, 'Oh my.');
+//Prototypes - watch closely
+var empty = {};
+console.log(empty.toString);
+console.log(empty.toString());
+console.log(Object.getPrototypeOf({}) === Object.prototype);
+console.log(Object.getPrototypeOf(Object.prototype));
+console.log(Object.getPrototypeOf(isNaN) === Function.prototype);
+console.log(Object.getPrototypeOf([]) === Array.prototype);
+
+console.log('-----Prototypes -----');
+var protoRabbit = {
+  speak: function (line) {
+    console.log('The ' + this.type + ' rabbit says ' + line + ' ');
+  }
+};
+var kRabbit = Object.create(protoRabbit);
+kRabbit.type = 'k';
+kRabbit.speak('skreeeee!');
+
+console.log('-----Constructors-----');
+function Rabbit(type) {
+  this.type = type;
+}
+var kR = new Rabbit('k');
+var blackRabbit = new Rabbit('black');
+console.log(blackRabbit.type);
 
