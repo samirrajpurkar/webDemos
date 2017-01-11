@@ -277,7 +277,97 @@ console.log('-----Constructors-----');
 function Rabbit(type) {
   this.type = type;
 }
-var kR = new Rabbit('k');
 var blackRabbit = new Rabbit('black');
+var kR = new Rabbit('kRabbit');
 console.log(blackRabbit.type);
+Rabbit.prototype.speak = function (line) {
+  console.log('The ' + this.type + ' rabbit says' + line + '');
+};
+blackRabbit.speak('Doom...');
+Rabbit.prototype.teeth = 'small';
+console.log(kR.teeth);
+kR.teeth = 'long, sharp and b';
+console.log(kR.teeth);
+console.log(blackRabbit);
+console.log(Rabbit.prototype.teeth);
 
+console.log('----Prototype Interference ----');
+Rabbit.prototype.dance = function () {
+  console.log('The ' + this.type + ' rabbit dances a jig');
+};
+kR.dance();
+
+var map = {};
+function storePhi(event, phi) {
+  map[event] = phi;
+}
+storePhi('pizza', 0.069);
+storePhi('touched tree', -0.081);
+Object.prototype.nonsense = 'hi';
+for (var name in map) {
+  if (name) {
+    console.log(name);
+  }
+}
+delete Object.prototype.nonsense;
+
+Object.defineProperty(Object.prototype, 'hiddenNonsense', {
+  enumerable: false, value: 'hi'}
+);
+
+for (var nameagain in map) {
+  if (nameagain) {
+    console.log(nameagain);
+  }
+}
+console.log(map.hiddenNonsense);
+
+for (var namesmart in map) {
+  if (Object.hasOwnProperty(namesmart)) {
+    console.log(namesmart);
+  }
+}
+
+var map1 = Object.create(null);
+map1['pizza'] = 0.069;
+console.log('toString' in map1); //return false
+console.log('pizza' in map1); //return trure
+
+console.log('----Polymorphism----');
+
+txt = 'sam \n really';
+console.log(txt.split('\n').length);
+
+function TextCell(text) {
+  this.text = text.split('\n');
+}
+TextCell.prototype.minWidth = function () {
+  return this.text.reduce(function (width, line) {
+    return Math.max(width, line.length);
+  },0);
+};
+TextCell.prototype.minHeight = function () {
+  return this.text.length;
+};
+TextCell.prototype.draw = function (width, height) {
+  var result = [];
+  for (var i = 0; i < height; i++) {
+    var line = this.text[i] || '';
+    result.push(line + repeat(' ', width - line.length));
+  }
+  return result;
+};
+var rows = [];
+for (var i = 0; i < 5; i++) {
+  var row = [];
+  for (var j = 0; j < 5; j++) {
+    if ((j + i) % 2 === 0) {
+      row.push('##');
+    }
+    else {
+      row.push('  ');
+    }
+  }
+  rows.push(row);
+}
+console.log(rows);
