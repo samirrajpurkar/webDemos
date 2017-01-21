@@ -50,3 +50,20 @@ myFunction(10, function (x) { // callback 1
     });
   });
 });
+
+// asynchronous code using timer
+var asyncLog = function (value$) {
+  setTimeout(function ( ) {
+    console.log(value$);
+  }, 0);
+};
+
+var count = 0;
+var interval = setInterval(function () {
+  count++;
+  console.log(count);
+  if (count >= 3) {
+    clearInterval(interval);
+  }
+}, 1000);
+
