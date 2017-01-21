@@ -22,11 +22,15 @@ var c = calculate(10, 5, function (x, y) {
 var d = calculate(2, 3, (x, y) => {return x ^ y;});
 
 var a = calculate(2 , 3, add);
-console.log(a);
-
 var m = calculate(4, 4, multiply);
-console.log(m);
 
-console.log(c);
-console.log(d);
+// Example of methods that uses Callback Functions
+var array = [1,2,3,4,5];
 
+var marray = array.map(function (e) {
+  return e * e;
+});
+
+var farray = array.filter(function (e) {
+  return e % 2 === 0;
+});
