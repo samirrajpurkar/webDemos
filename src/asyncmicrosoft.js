@@ -34,3 +34,19 @@ var marray = array.map(function (e) {
 var farray = array.filter(function (e) {
   return e % 2 === 0;
 });
+
+//Chaining callback functions with Continuation Passing Style
+var myFunction = function (x, callback) {
+  callback(x);
+};
+var answer = 0;
+
+myFunction(10, function (x) { // callback 1
+  var result_0 = x * x; // result_0 = 100
+  myFunction(result_0, function (y) { //callback 2
+    var result_1 = result_0 + result_0; // result_1 = 200
+    myFunction(result_1, function (z) { //callback 3
+      answer = result_1 + 100; // answer = 300
+    });
+  });
+});
