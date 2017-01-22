@@ -1,7 +1,20 @@
 // Global variables will go here
 var clickedArray = []; //clickedArray keep track of Clicked cells.
+var interval;
+var started = false;
+var time = 0;
 
 //function definitions goes here
+var startTimer = function ( ) {
+  if (started === false) {
+    interval = setInterval(function () {
+      time++;
+      document.getElementById('timer').innerHTML = 'Time Elapsed: ' + time;
+    }, 1000);
+  }
+  started = true;
+};
+
 var randomAnswers = function ( ) {
   var answers = [1,1,2,2,3,3,4,4,5];
   answers.sort(function (item) {
@@ -36,6 +49,7 @@ var setup = function ( ) {
       }
     }); // Mouse leave and the grid regains it color back to blue
     cell.addEventListener('click', function (e) {
+      startTimer();
       if (this.completed === false && this.clicked === false) {
         clickedArray.push(this);
         reveal(this);
