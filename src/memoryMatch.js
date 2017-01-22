@@ -1,4 +1,5 @@
 // Global variables will go here
+var clickedArray = []; //clickedArray keep track of Clicked cells.
 
 //function definitions goes here
 var randomAnswers = function ( ) {
@@ -9,6 +10,13 @@ var randomAnswers = function ( ) {
   return answers;
 };
 
+var reveal = function (cell) {
+  cell.clicked = true;
+  cell.innerHTML = cell.value;
+  cell.style.background = 'red';
+};
+
+// Setup
 var setup = function ( ) {
   var answers = randomAnswers();
   var grid = document.getElementsByTagName('td');
@@ -22,7 +30,18 @@ var setup = function ( ) {
         this.style.background = 'orange';
       }
     }); // Mouse enter and the grid background changes to orange
-
+    cell.addEventListener('mouseleave', function (e) {
+      if (this.completed === false && this.clicked === false) {
+        this.style.background = 'blue';
+      }
+    }); // Mouse leave and the grid regains it color back to blue
+    cell.addEventListener('click', function (e) {
+      if (this.completed === false && this.clicked === false) {
+        clickedArray.push(this);
+        reveal(this);
+        console.log(clickedArray);
+      }
+    });
   }
 };
 
