@@ -62,8 +62,26 @@ var count = 0;
 var interval = setInterval(function () {
   count++;
   console.log(count);
-  if (count >= 3) {
+  if (count >= 2) {
     clearInterval(interval);
   }
 }, 1000);
+
+// Creating a new Promise
+var promise = new Promise(function (resolve, reject) {
+  // do stuff
+  var isSuccessful = true;
+  if (isSuccessful) { //if everything is successful
+    resolve('Success');
+  }
+  else {
+    reject(Error('Failure'));
+  }
+});
+
+promise.then(function (val) { //success callback
+  console.log(val);
+}, function (val) { //rejection callback
+  console.log(val);
+});
 
