@@ -52,20 +52,20 @@ myFunction(10, function (x) { // callback 1
 });
 
 // asynchronous code using timer
-var asyncLog = function (value$) {
-  setTimeout(function ( ) {
-    console.log(value$);
-  }, 0);
-};
+// var asyncLog = function (value$) {
+//   setTimeout(function ( ) {
+//     console.log(value$);
+//   }, 0);
+// };
 
-var count = 0;
-var interval = setInterval(function () {
-  count++;
-  console.log(count);
-  if (count >= 2) {
-    clearInterval(interval);
-  }
-}, 1000);
+// var count = 0;
+// var interval = setInterval(function () {
+//   count++;
+//   console.log(count);
+//   if (count >= 2) {
+//     clearInterval(interval);
+//   }
+// }, 1000);
 
 // Creating a new Promise
 var promise = new Promise(function (resolve, reject) {
@@ -83,5 +83,17 @@ promise.then(function (val) { //success callback
   console.log(val);
 }, function (val) { //rejection callback
   console.log(val);
+});
+
+// Transform promise
+var promise1 = Promise.resolve('hello');
+// Transforming Values
+var promise2 = promise1.then(function (result) {
+  console.log(result); // logs hello
+  return result + 'world';
+});
+
+promise2.then(function (result) {
+  console.log(result); // logs hello world;
 });
 
