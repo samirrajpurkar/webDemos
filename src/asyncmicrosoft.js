@@ -90,10 +90,28 @@ var promise1 = Promise.resolve('hello');
 // Transforming Values
 var promise2 = promise1.then(function (result) {
   console.log(result); // logs hello
-  return result + 'world';
+  return result + ' - world';
 });
 
 promise2.then(function (result) {
   console.log(result); // logs hello world;
+});
+
+// Chaining Promises
+chainPromise = Promise.resolve([1,2,3,4]);
+
+chainPromise.then(function (result) {
+  console.log(result); //logs [1,2,3,4]
+  return result.map(x => x * x);
+}).then(function (result2) {
+  console.log(result2); // logs [1,4,9,16]
+  return result2.filter(x => x > 10); //keeps elements greater than 10
+}).then(function (result3) {
+  console.log(result3); //logs [16]
+  return result3.toString() + '!!!';
+}).then(function (result4) {
+  console.log(result4); //logs '16!'
+}).catch(function (error) {
+  console.log(error);
 });
 
