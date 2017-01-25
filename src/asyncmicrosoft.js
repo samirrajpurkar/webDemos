@@ -115,3 +115,13 @@ chainPromise.then(function (result) {
   console.log(error);
 });
 
+// Returning a Promise within then()
+var spromise = Promise.resolve('hello sequencing async ');
+var spromise1 = spromise.then(function (result) {
+  console.log(result); //logs hello sequencying async
+  return Promise.resolve('12345'); // return a promise with a value of 12345
+});
+spromise1.then(function (result) {
+  console.log(result); // logs '12345'
+});
+
