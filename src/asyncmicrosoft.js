@@ -68,60 +68,92 @@ myFunction(10, function (x) { // callback 1
 // }, 1000);
 
 // Creating a new Promise
-var promise = new Promise(function (resolve, reject) {
-  // do stuff
-  var isSuccessful = true;
-  if (isSuccessful) { //if everything is successful
-    resolve('Success');
-  }
-  else {
-    reject(Error('Failure'));
-  }
-});
+// var promise = new Promise(function (resolve, reject) {
+//   // do stuff
+//   var isSuccessful = true;
+//   if (isSuccessful) { //if everything is successful
+//     resolve('Success');
+//   }
+//   else {
+//     reject(Error('Failure'));
+//   }
+// });
 
-promise.then(function (val) { //success callback
-  console.log(val);
-}, function (val) { //rejection callback
-  console.log(val);
-});
+// promise.then(function (val) { //success callback
+//   console.log(val);
+// }, function (val) { //rejection callback
+//   console.log(val);
+// });
 
-// Transform promise
-var promise1 = Promise.resolve('hello');
-// Transforming Values
-var promise2 = promise1.then(function (result) {
-  console.log(result); // logs hello
-  return result + ' - world';
-});
+// // Transform promise
+// var promise1 = Promise.resolve('hello');
+// // Transforming Values
+// var promise2 = promise1.then(function (result) {
+//   console.log(result); // logs hello
+//   return result + ' - world';
+// });
 
-promise2.then(function (result) {
-  console.log(result); // logs hello world;
-});
+// promise2.then(function (result) {
+//   console.log(result); // logs hello world;
+// });
 
-// Chaining Promises
-chainPromise = Promise.resolve([1,2,3,4]);
+// // Chaining Promises
+// chainPromise = Promise.resolve([1,2,3,4]);
 
-chainPromise.then(function (result) {
-  console.log(result); //logs [1,2,3,4]
-  return result.map(x => x * x);
-}).then(function (result2) {
-  console.log(result2); // logs [1,4,9,16]
-  return result2.filter(x => x > 10); //keeps elements greater than 10
-}).then(function (result3) {
-  console.log(result3); //logs [16]
-  return result3.toString() + '!!!';
-}).then(function (result4) {
-  console.log(result4); //logs '16!'
+// chainPromise.then(function (result) {
+//   console.log(result); //logs [1,2,3,4]
+//   return result.map(x => x * x);
+// }).then(function (result2) {
+//   console.log(result2); // logs [1,4,9,16]
+//   return result2.filter(x => x > 10); //keeps elements greater than 10
+// }).then(function (result3) {
+//   console.log(result3); //logs [16]
+//   return result3.toString() + '!!!';
+// }).then(function (result4) {
+//   console.log(result4); //logs '16!'
+// }).catch(function (error) {
+//   console.log(error);
+// });
+
+// // Returning a Promise within then()
+// var spromise = Promise.resolve('hello sequencing async ');
+// var spromise1 = spromise.then(function (result) {
+//   console.log(result); //logs hello sequencying async
+//   return Promise.resolve('12345'); // return a promise with a value of 12345
+// });
+// spromise1.then(function (result) {
+//   console.log(result); // logs '12345'
+// });
+
+// Sequencing Asynchronous Operations
+var getRandomNumber = Promise.resolve(1);
+
+var getNameFromNumber = function (number) {
+  setTimeout(function () {
+    //console.log('Ace');
+    return Promise.resolve('Ace');
+  }, 500);
+};
+
+var getAgeFromName = function (name) {
+  setTimeout(function () {
+    //console.log(25);
+    return Promise.resolve(25);
+  }, 500);
+};
+
+// If the code is not in sync then we get all variables set to undefined.
+// var number = getRandomNumber();
+// var name = getNameFromNumber(number);
+// var age = getAgeFromName(name);
+getRandomNumber.then(function (number) {
+  console.log(number); // 1
+  return getNameFromNumber(number); // returns a promise
+}).then(function (name) {
+  console.log(name);
+  return getAgeFromName(name);
+}).then(function (age) {
+  console.log(age);
 }).catch(function (error) {
   console.log(error);
 });
-
-// Returning a Promise within then()
-var spromise = Promise.resolve('hello sequencing async ');
-var spromise1 = spromise.then(function (result) {
-  console.log(result); //logs hello sequencying async
-  return Promise.resolve('12345'); // return a promise with a value of 12345
-});
-spromise1.then(function (result) {
-  console.log(result); // logs '12345'
-});
-
