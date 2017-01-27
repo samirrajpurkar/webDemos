@@ -126,34 +126,39 @@ myFunction(10, function (x) { // callback 1
 // });
 
 // Sequencing Asynchronous Operations
-var getRandomNumber = Promise.resolve(1);
-
-var getNameFromNumber = function (number) {
-  setTimeout(function () {
-    //console.log('Ace');
-    return Promise.resolve('Ace');
-  }, 500);
-};
-
-var getAgeFromName = function (name) {
-  setTimeout(function () {
-    //console.log(25);
-    return Promise.resolve(25);
-  }, 500);
-};
-
 // If the code is not in sync then we get all variables set to undefined.
 // var number = getRandomNumber();
 // var name = getNameFromNumber(number);
 // var age = getAgeFromName(name);
-getRandomNumber.then(function (number) {
-  console.log(number); // 1
+
+var delay = function (result) {
+  return new Promise(function (resolve, reject) {
+    setTimeout(function () {
+      resolve(result);
+    }, 0);
+  });
+};
+
+var getRandomNumber = function () {
+  return delay(1);
+};
+
+var getNameFromNumber = function (number) {
+  return delay('Ace');
+};
+
+var getAgeFromName = function (name) {
+  return delay(25);
+};
+
+getRandomNumber().then(function (number) {
+  console.log('Random Number : ', number); // 1
   return getNameFromNumber(number); // returns a promise
 }).then(function (name) {
-  console.log(name);
+  console.log('Name : ', name);
   return getAgeFromName(name);
 }).then(function (age) {
-  console.log(age);
+  console.log('Age :', age);
 }).catch(function (error) {
   console.log(error);
 });
