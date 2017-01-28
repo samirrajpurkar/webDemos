@@ -186,3 +186,23 @@ Promise.all([rpromise1, rpromise2, rpromise3])
   .catch(function (error) {
     console.log(error);
   });
+
+  // Promise Race - method can be used to choose the quickest source
+  // when there are two similar sources of the same data.
+var racepromise1 = new Promise(function (resolve, reject) {
+  setTimeout(function () {
+    resolve('finished in two seconds');
+  }, 2000);
+});
+
+var racepromise2 = new Promise(function (resolve, reject) {
+  setTimeout(function () {
+    resolve('finished in five seconds');
+  }, 5000);
+});
+
+Promise.race([racepromise1, racepromise2]).then(function (result) {
+  console.log(result);
+}).catch(function (error) {
+  console.log(error);
+});
