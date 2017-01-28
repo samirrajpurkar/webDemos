@@ -162,3 +162,27 @@ getRandomNumber().then(function (number) {
 }).catch(function (error) {
   console.log(error);
 });
+
+// Promise All - process mulitple promises at the same time.
+var apromise1 = Promise.resolve('hello');
+var apromise2 = Promise.resolve({age: 2, height: 188});
+var apromise3 = 42; // normal values work with Promise.all
+
+Promise.all([apromise1, apromise2, apromise3]).then(function (result) {
+  console.log(result);
+}).catch(function (error) {
+  console.log(error);
+});
+
+// Promise All - method call rejects when one of the Promises rejects
+var rpromise1 = Promise.resolve('hello');
+var rpromise2 = Promise.resolve({age: 2, height: 188});
+var rpromise3 = Promise.reject('Promise returns a failure');
+
+Promise.all([rpromise1, rpromise2, rpromise3])
+  .then(function (result) {
+    console.log(result);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
