@@ -206,3 +206,25 @@ Promise.race([racepromise1, racepromise2]).then(function (result) {
 }).catch(function (error) {
   console.log(error);
 });
+
+// Notice how the Promise.race() method is used to limit the amount of time
+// a Promise has to resolve
+var promiseResolveTenSeconds = new Promise(function (resolve, reject) {
+  setTimeout(function ( ) {
+    resolve('finished in ten seconds');
+  }, 10000);
+});
+
+var promiseRejectFiveSeconds = new Promise(function (resolve, reject) {
+  setTimeout(function () {
+    reject('error: promise took longer than 5 seconds to resolve');
+  }, 5000);
+});
+
+Promise.race([promiseResolveTenSeconds, promiseRejectFiveSeconds])
+  .then(function (result) {
+    console.log(result); // never occurs because promiseRejectFiveSeconds rejected
+  })
+  .catch(function (error) {
+    console.log(error); //logs 'error'
+  });
