@@ -41,6 +41,50 @@
       });
       return promise;
     };
+    var searchProductsByType = function (type) {
+      var promise = new Promise(function (resolve, reject) {
+        var typeArray = [];
+        var possibleTypes = ['Electronics', 'Book', 'Clothing', 'Food'];
+        if (!possibleTypes.includes(type)) {
+          reject('Invalid Type: ' + type);
+        } else {
+          setTimeout(function () {
+            for (var i = 0; i < catalog.length; i++) {
+              if (catalog[i].type === type) {
+                typeArray.push({id: catalog[i].id,
+                                price: catalog[i].price,
+                                type: catalog[i].type});
+              }
+            }
+            resolve(typeArray);
+          }, 1000);
+        }
+      });
+      return promise;
+    };
+    var searchProductByPrice = function (price, difference) {
+      var promise = new Promise(function (resolve, reject) {
+        var result = [];
+        if (!isFinite(price)) {
+          reject('Invalid Price : ' + price);
+        }
+        else {
+          setTimeout(function () {
+            for (var i = 0; i < catalog.length; i++) {
+              if (Math.abs(catalog[i].price - price) < difference) {
+                result.push({
+                  id: catalog[i].id,
+                  price: catalog[i].price,
+                  type: catalog[i].type
+                });
+              }
+            }
+            resolve(result);
+          }, 1000);
+        }
+      });
+      return promise;
+    };
 
     // return api object
     return {
