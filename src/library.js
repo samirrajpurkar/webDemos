@@ -9,14 +9,14 @@
     };
     var createRandomCatalog = function (num) {
       var catalog = [];
-      for (var i = 0; i < catalog.length; i++) {
+      for (var i = 0; i < num ; i++) {
         var rproduct = createRandomProduct();
         catalog.push({id: i, price: rproduct.price, type: rproduct.type});
       }
       return catalog;
     };
     // Global variables, Execute code
-    var catalog = createRandomCatalog(100);
+    var catalog = createRandomCatalog(10);
 
     // External function definition
     var searchAllProducts = function () {
