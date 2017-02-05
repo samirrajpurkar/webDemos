@@ -16,7 +16,7 @@
       return catalog;
     };
     // Global variables, Execute code
-    var catalog = createRandomCatalog(10);
+    var catalog = createRandomCatalog(100);
 
     // External function definition
     var searchAllProducts = function () {
@@ -28,15 +28,16 @@
       return promise;
     };
     var searchProductById = function (id) {
+      console.log('From searchProductById :', id);
       var promise = new Promise(function (resolve, reject) {
         setTimeout(function () {
           for (var i = 0; i < catalog.length; i++) {
-            if (catalog[i].id === id) {
+            if (catalog[i].id === parseInt(id)) {
+              console.log('From the for Loop - catalog[i] ', catalog[i].id);
               resolve({id: id, price: catalog[i].price, type: catalog[i].type});
-            } else {
-              reject('Invalid ID : ' + id);
             }
           }
+          reject('Error Invalid Id: ' + id);
         }, 1000);
       });
       return promise;
