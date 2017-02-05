@@ -14,7 +14,25 @@ var createTableHeader = function (tableId) {
   tableHeaderRow.appendChild(th4);
   document.getElementById(tableId).appendChild(tableHeaderRow);
 };
+var getIntersection = function (arrA, arrB, searchId) {
+  var samePrice = arrA;
+  var sameType = arrB;
+  var similarArray = [];
+  samePrice.forEach(function (obj1) {
+    sameType.forEach(function (obj2) {
+      if (obj1.id === obj2.id && obj1.id !== searchId) {
+        similarArray.push(obj1);
+      }
+    });
+  });
+  return similarArray;
+};
 
+var processSearch = function (searchId) {
+  api.searchProductById(searchId).then(function (val) {
+    console.log(val);
+  });
+};
 var updateTable = function (tableId, productArray) {
   // take a reference to table element
   var tableBody = document.getElementById(tableId);
@@ -30,9 +48,10 @@ var updateTable = function (tableId, productArray) {
     var td1 = document.createElement('TD');
     var td2 = document.createElement('TD');
     var td3 = document.createElement('TD');
-    var td4 = document.createElement('BUTTON');
+    var td4 = document.createElement('button');
 
-    td4.addEventListener('click', function () { });
+    td4.addEventListener('click', function () {
+    });
 
     td1.appendChild(document.createTextNode(productArray[i].id));
     td2.appendChild(document.createTextNode(productArray[i].type));
@@ -58,3 +77,9 @@ var updateExaminedText = function (product) {
   outputString += '<br> Type : ' + product.type;
   document.getElementById('productText').innerHTML = outputString;
 };
+
+document.getElementById('inputButton').addEventListener('click', function ( ) {
+  console.log(document.getElementById('input').value);
+  processSearch(document.getElementById('input').value);
+});
+
