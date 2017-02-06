@@ -28,11 +28,13 @@ var getIntersection = function (arrA, arrB, searchId) {
   return similarArray;
 };
 
-var processSearch = function (searchId) {
-  api.searchProductById(searchId).then(function (val) {
-    console.log(val);
-  });
+var updateExaminedText = function (product) {
+  var outputString = 'Product Id: ' + product.id;
+  outputString += '<br> Price : ' + product.price;
+  outputString += '<br> Type : ' + product.type;
+  document.getElementById('productText').innerHTML = outputString;
 };
+
 var updateTable = function (tableId, productArray) {
   // take a reference to table element
   var tableBody = document.getElementById(tableId);
@@ -67,19 +69,27 @@ var updateTable = function (tableId, productArray) {
   }
 };
 
+var processSearch = function (searchId) {
+  api.searchProductById(searchId).then(function (val) {
+    return Promise.all([api.searchProductsByPrice(val.price, 50),
+                        api.searchProductsByType(val.type),
+                        val]);
+  }).then(function (resultsArray) {
+    var similarArray = getIntersection(resultsArray[0],
+                                       resultsArray[1],
+                                       resultsArray[2].id);
+    updateExaminedText(resultsArray[2]);
+    updateTable('similarTable', similarArray);
+  }).catch(function (error) {
+    console.log('Error: In processSearch');
+  });
+};
+
 api.searchAllProducts().then(function (products) {
   updateTable('allTable', products);
 });
 
-var updateExaminedText = function (product) {
-  var outputString = 'Product Id: ' + product.id;
-  outputString += '<br> Price : ' + product.price;
-  outputString += '<br> Type : ' + product.type;
-  document.getElementById('productText').innerHTML = outputString;
-};
-
 document.getElementById('inputButton').addEventListener('click', function ( ) {
-  console.log(document.getElementById('input').value);
   processSearch(document.getElementById('input').value);
 });
 
