@@ -28,12 +28,10 @@
       return promise;
     };
     var searchProductById = function (id) {
-      console.log('From searchProductById :', id);
       var promise = new Promise(function (resolve, reject) {
         setTimeout(function () {
           for (var i = 0; i < catalog.length; i++) {
             if (catalog[i].id === parseInt(id)) {
-              console.log('From the for Loop - catalog[i] ', catalog[i].id);
               resolve({id: id, price: catalog[i].price, type: catalog[i].type});
             }
           }
@@ -63,7 +61,7 @@
       });
       return promise;
     };
-    var searchProductByPrice = function (price, difference) {
+    var searchProductsByPrice = function (price, difference) {
       var promise = new Promise(function (resolve, reject) {
         var result = [];
         if (!isFinite(price)) {
@@ -90,7 +88,7 @@
     // return api object
     return {
       searchProductById: searchProductById,
-      searchProductByPrice: searchProductByPrice,
+      searchProductsByPrice: searchProductsByPrice,
       searchProductsByType: searchProductsByType,
       searchAllProducts: searchAllProducts
     };
