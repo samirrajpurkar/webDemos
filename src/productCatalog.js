@@ -53,6 +53,7 @@ var updateTable = function (tableId, productArray) {
     var td4 = document.createElement('button');
 
     td4.addEventListener('click', function () {
+      processSearch(this.parentNode.firstChild.innerHTML);
     });
 
     td1.appendChild(document.createTextNode(productArray[i].id));
@@ -68,7 +69,6 @@ var updateTable = function (tableId, productArray) {
     tableBody.appendChild(tr);
   }
 };
-
 var processSearch = function (searchId) {
   api.searchProductById(searchId).then(function (val) {
     return Promise.all([api.searchProductsByPrice(val.price, 50),
