@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Design Patterns</title>
+  <meta charset="utf-8">
+  <script type="text/javascript" src="./src/library.js"></script>
+</head>
+<body>
+
+
+<script type="text/javascript" src="./src/designpatterns.js"></script>
+</body>
+</html>
