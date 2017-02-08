@@ -52,9 +52,7 @@ var updateTable = function (tableId, productArray) {
     var td3 = document.createElement('TD');
     var td4 = document.createElement('button');
 
-    td4.addEventListener('click', function () {
-      processSearch(this.parentNode.firstChild.innerHTML);
-    });
+    examineButtonListener(td4);
 
     td1.appendChild(document.createTextNode(productArray[i].id));
     td2.appendChild(document.createTextNode(productArray[i].type));
@@ -69,6 +67,7 @@ var updateTable = function (tableId, productArray) {
     tableBody.appendChild(tr);
   }
 };
+
 var processSearch = function (searchId) {
   api.searchProductById(searchId).then(function (val) {
     return Promise.all([api.searchProductsByPrice(val.price, 50),
@@ -85,6 +84,12 @@ var processSearch = function (searchId) {
   });
 };
 
+var examineButtonListener = function (button) {
+  button.addEventListener('click', function () {
+    processSearch(this.parentNode.firstChild.innerHTML);
+  });
+};
+
 api.searchAllProducts().then(function (products) {
   updateTable('allTable', products);
 });
@@ -93,3 +98,28 @@ document.getElementById('inputButton').addEventListener('click', function ( ) {
   processSearch(document.getElementById('input').value);
 });
 
+var processSearchByType = function (searchType) {
+  api.searchProductsByType(searchType).then(function (products) {
+    updateTable('similarTable', products);
+  });
+};
+
+document.getElementById('inputProductTypeButton')
+        .addEventListener('click', function ( ) {
+          processSearchByType(document.getElementById('inputProductType').value);
+        });
+
+var processSearchByPrice = function (price) {
+  api.searchProductsByPrice(price, 50)
+     .then(function (products) {
+       updateTable('similarTable', products);
+     })
+     .catch(function (error) {
+       console.log('Error In : processSearchByPrice');
+     });
+};
+
+document.getElementById('inputProductPriceButton')
+        .addEventListener('click', function () {
+          processSearchByPrice(document.getElementById('inputProductPrice').value);
+        });
