@@ -98,3 +98,32 @@ console.log(three);
 console.log(four);
 console.log(five);
 console.log(done);
+
+// Sending input using next()
+function* genFunction2() {
+  var aaa = yield;
+  console.log(aaa);
+  var bbb = yield;
+  console.log(bbb);
+  var ccc = yield;
+  console.log(ccc);
+}
+
+var genObject3 = genFunction2();
+
+genObject3.next(0); //starts genFunction2 the value inside the next() call is ignored
+genObject3.next('aaa'); // sends a value of 1 to genFunction2()
+genObject3.next('bbb');
+genObject3.next('ccc');
+genObject3.next(4); // the value inside next() is ignored because genFunction2() has no more yields
+
+// next() method is used to obtain values from yield, modify them and then send back
+function* genFunction3() {
+  var m = yield 'm';
+  console.log(a);
+  var n = yield 'n';
+  console.log(n);
+  var o = yield 'o';
+  console.log(o);
+}
+
