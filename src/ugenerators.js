@@ -53,3 +53,48 @@ try {
 catch (error) {
   console.log(error.message);
 }
+
+// Yielding to other generators
+// yield* statement is used
+function* genFuncA() {
+  yield 'a';
+  yield 'b';
+  yield 'c';
+
+  return 'done with genFuncA()!';
+}
+
+function* genFuncB() {
+  yield 1;
+  var returnValueFuncA = yield* genFuncA(); // contains iterable [a, b,c]
+  yield returnValueFuncA;
+  yield 2;
+  yield 3;
+  yield* [4,5];
+
+  return 'done with genFuncB()!';
+}
+
+var genObject2 = genFuncB();
+
+var one = genObject2.next();
+var aa = genObject2.next();
+var bb = genObject2.next();
+var cc = genObject2.next();
+var resultFuncA = genObject2.next();
+var two = genObject2.next();
+var three = genObject2.next();
+var four = genObject2.next();
+var five = genObject2.next();
+var done = genObject2.next();
+
+console.log(one);
+console.log(aa);
+console.log(bb);
+console.log(cc);
+console.log(resultFuncA);
+console.log(two);
+console.log(three);
+console.log(four);
+console.log(five);
+console.log(done);
