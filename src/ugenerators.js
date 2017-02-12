@@ -149,3 +149,7 @@ for (var ig of genFunctionFor()) {
 // Spread Operator is used to iterate over a Generator Object
 var garr = [...genFunctionFor()];
 // garr = ['a', undefined, 1, 2, 3, 123];
+
+// Destructuring assignment is used to iterate through Generator Object
+// var [a, b, c, d, e, f] = genFunctionFor();
+// Destructuring assignment is not working for some reason.
