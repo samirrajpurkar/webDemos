@@ -132,3 +132,16 @@ var ym = genObject4.next(); // starts genFunction3(), w = {value: 'm', done: fal
 var yn = genObject4.next(ym.value + '!'); // yn = {value: 'n', done: false}
 var yo = genObject4.next(yn.value.toUpperCase()); //  yo = {value: 'o', done: false}
 var done3 = genObject4.next(ym.value + yn.value + yo.value); // done3 = {value: undefined, done: true}
+
+// For ...of statement is used to iterate through a Generator Object
+function* genFunctionFor() {
+  yield 'a';
+  yield;
+  yield* [1,2,3];
+  yield 123;
+
+  return 'finieshed';
+}
+for (var ig of genFunctionFor()) {
+  console.log(ig);
+}
