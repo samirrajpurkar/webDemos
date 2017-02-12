@@ -118,3 +118,77 @@ Car2.prototype.toString = function ( ) {
 
 var lambogini = new Car2('Lambogini', '2016', 10000);
 console.log(lambogini.toString());
+
+// Module Pattern
+
+// 1. Module Pattern - Object Literals
+var myObjectLiteral = {
+  variableKey: 'variableValue',
+  functionKey: function () {}
+};
+
+var myModule = {
+  myProperty: 'someValue',
+  myconfig: {
+    useCaching: true,
+    languague: 'en'
+  },
+  saySomething: function () {
+    console.log('Where are you?');
+  },
+  reportMyConfig: function () {
+    console.log('Caching is: ' +
+      (this.myconfig.useCaching ? 'enabled' : 'disabled'));
+  },
+  updateMyConfig: function (newConfig) {
+    if (typeof (newObject) === 'object') {
+      this.myconfig = newConfig;
+      console.log(this.myconfig);
+    }
+  }
+};
+
+myModule.saySomething();
+myModule.reportMyConfig();
+myModule.updateMyConfig({useCaching: false, languague: 'fr'});
+myModule.reportMyConfig();
+
+// Module Pattern - self -contained
+var testModule = (function () {
+  var counter = 0;
+  return {
+    incrementCounter: function () {
+      return counter++;
+    },
+    resetCounter: function () {
+      console.log('counter value prior to reset: ', counter);
+      counter = 0;
+    }
+  };
+})();
+
+// Usage of Module Pattern
+testModule.incrementCounter();
+testModule.resetCounter();
+
+var myNameSpace = (function () {
+  var myPrivateVar;
+  var myPrivateMethod;
+  // A private counter variable
+  myPrivateVar = 0;
+  // A private function which logs any arguments
+  myPrivateMethod = function (foo) {
+    console.log(foo);
+  };
+  return {
+    // A public variable
+    myPublicVar: 'foo',
+    // A public function utilizing rivates
+    myPublicFunction: function (bar) {
+      // Increment our private counter
+      myPrivateVar++;
+      // Call our private method using bar
+      myPrivateMethod(bar);
+    }
+  };
+})();
