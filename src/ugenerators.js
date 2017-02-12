@@ -143,5 +143,9 @@ function* genFunctionFor() {
   return 'finieshed';
 }
 for (var ig of genFunctionFor()) {
-  console.log(ig);
+  console.log(ig); // returned value is not outputted
 }
+
+// Spread Operator is used to iterate over a Generator Object
+var garr = [...genFunctionFor()];
+// garr = ['a', undefined, 1, 2, 3, 123];
