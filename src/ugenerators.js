@@ -166,5 +166,31 @@ var genObject5 = genFunction4();
 var aaaa = genObject5.next(); // aaa = {value: 'a', done: false}
 // var bbbb = genObject5.return(); // return function doesnot work in node
  // bbbb = {value: 'return() was called...!', done: true}
-var bbbb = genObject5.throw(new Error('Error ***'));
+//var bbbb = genObject5.throw(new Error('Error ***')); //throw function does not work in node
 var cccc = genObject5.next(); // cccc = {value: undefined, done: true}
+
+// Using Generator Functions with Asynchronous Functions
+function* genFunctWithAsync() {
+  var post1title = yield fetch('https://jsonplaceholder.typicode.com/posts/1');
+  console.log(post1title);
+  var post2title = yield fetch('https://jsonplaceholder.typicode.com/posts/2');
+  console.log(post2title);
+}
+
+var genObjectAsync = genFunctWithAsync();
+var yieldedObject = genObjectAsync.next();
+var firstPromise = yieldedObject.value;
+firstPromise
+  .then(function (val) {
+    return val.json();
+  })
+  .then(function (val1) {
+    var secondPromise = genObjectAsync.next(val1.title);
+    secondPromise
+      .then(function (val2) {
+        return val2.json();
+      })
+      .then(function (val3) {
+        genObjectAsync.next(val3.title);
+      });
+  });
