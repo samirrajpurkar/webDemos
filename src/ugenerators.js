@@ -120,10 +120,15 @@ genObject3.next(4); // the value inside next() is ignored because genFunction2()
 // next() method is used to obtain values from yield, modify them and then send back
 function* genFunction3() {
   var m = yield 'm';
-  console.log(a);
+  console.log(m);
   var n = yield 'n';
   console.log(n);
   var o = yield 'o';
   console.log(o);
 }
 
+var genObject4 = genFunction3();
+var ym = genObject4.next(); // starts genFunction3(), w = {value: 'm', done: false}
+var yn = genObject4.next(ym.value + '!'); // yn = {value: 'n', done: false}
+var yo = genObject4.next(yn.value.toUpperCase()); //  yo = {value: 'o', done: false}
+var done3 = genObject4.next(ym.value + yn.value + yo.value); // done3 = {value: undefined, done: true}
