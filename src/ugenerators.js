@@ -166,4 +166,5 @@ var genObject5 = genFunction4();
 var aaaa = genObject5.next(); // aaa = {value: 'a', done: false}
 // var bbbb = genObject5.return(); // return function doesnot work in node
  // bbbb = {value: 'return() was called...!', done: true}
+var bbbb = genObject5.throw(new Error('Error ***'));
 var cccc = genObject5.next(); // cccc = {value: undefined, done: true}
