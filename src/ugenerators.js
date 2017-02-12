@@ -153,3 +153,17 @@ var garr = [...genFunctionFor()];
 // Destructuring assignment is used to iterate through Generator Object
 // var [a, b, c, d, e, f] = genFunctionFor();
 // Destructuring assignment is not working for some reason.
+
+function* genFunction4() {
+  yield 'a';
+  yield 'b';
+  yield 'c';
+
+  return 'finished';
+}
+
+var genObject5 = genFunction4();
+var aaaa = genObject5.next(); // aaa = {value: 'a', done: false}
+// var bbbb = genObject5.return(); // return function doesnot work in node
+ // bbbb = {value: 'return() was called...!', done: true}
+var cccc = genObject5.next(); // cccc = {value: undefined, done: true}
