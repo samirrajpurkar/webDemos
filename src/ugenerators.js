@@ -170,27 +170,62 @@ var aaaa = genObject5.next(); // aaa = {value: 'a', done: false}
 var cccc = genObject5.next(); // cccc = {value: undefined, done: true}
 
 // Using Generator Functions with Asynchronous Functions
-function* genFunctWithAsync() {
-  var post1title = yield fetch('https://jsonplaceholder.typicode.com/posts/1');
-  console.log(post1title);
-  var post2title = yield fetch('https://jsonplaceholder.typicode.com/posts/2');
-  console.log(post2title);
+// function* genFunctWithAsync() {
+//   var post1title = yield fetch('https://jsonplaceholder.typicode.com/posts/1');
+//   console.log(post1title);
+//   var post2title = yield fetch('https://jsonplaceholder.typicode.com/posts/2');
+//   console.log(post2title);
+// }
+
+// var genObjectAsync = genFunctWithAsync();
+// var yieldedObject = genObjectAsync.next();
+// var firstPromise = yieldedObject.value;
+// firstPromise
+//   .then(function (val) {
+//     return val.json();
+//   })
+//   .then(function (val1) {
+//     var secondPromise = genObjectAsync.next(val1.title);
+//     secondPromise
+//       .then(function (val2) {
+//         return val2.json();
+//       })
+//       .then(function (val3) {
+//         genObjectAsync.next(val3.title);
+//       });
+//   });
+
+// Recursive Method to Iterate through Promises
+console.log('--------------------------------------------');
+console.log('Recursive Method to Iterate through Promises');
+function run(genRFunc) {
+  const genRObject = genRFunc(); // creating a generator object
+
+  function iterate(iteration) {
+    if (iteration.done) {
+      return Promise.resolve(iteration.value);
+    }
+    return Promise.resolve(iteration.value)
+              .then(x => iterate(genRObject.next(x)))
+              .catch(x => iterate(genRObject.throw(x)));
+  }
+
+  try {
+    return iterate(genRObject.next());
+  } catch (ex) {
+    return Promise.reject(ex);
+  }
 }
 
-var genObjectAsync = genFunctWithAsync();
-var yieldedObject = genObjectAsync.next();
-var firstPromise = yieldedObject.value;
-firstPromise
-  .then(function (val) {
-    return val.json();
-  })
-  .then(function (val1) {
-    var secondPromise = genObjectAsync.next(val1.title);
-    secondPromise
-      .then(function (val2) {
-        return val2.json();
-      })
-      .then(function (val3) {
-        genObjectAsync.next(val3.title);
-      });
-  });
+function *gen() {
+  var post1Stream = yield fetch('https://jsonplaceholder.typicode.com/posts/1');
+  var post1 = yield post1Stream.json();
+  console.log(post1.title);
+
+  var number = yield 12345;
+  console.log(number);
+
+  return 'done';
+}
+
+run(gen).then(x => console.log(x)).catch(x => console.log(x.message));
