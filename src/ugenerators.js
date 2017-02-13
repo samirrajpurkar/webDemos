@@ -170,30 +170,34 @@ var aaaa = genObject5.next(); // aaa = {value: 'a', done: false}
 var cccc = genObject5.next(); // cccc = {value: undefined, done: true}
 
 // Using Generator Functions with Asynchronous Functions
-// function* genFunctWithAsync() {
-//   var post1title = yield fetch('https://jsonplaceholder.typicode.com/posts/1');
-//   console.log(post1title);
-//   var post2title = yield fetch('https://jsonplaceholder.typicode.com/posts/2');
-//   console.log(post2title);
-// }
+console.log('--------------------------------------------');
+console.log('Using Generator Functions with Asynchronous Functions');
 
-// var genObjectAsync = genFunctWithAsync();
-// var yieldedObject = genObjectAsync.next();
-// var firstPromise = yieldedObject.value;
-// firstPromise
-//   .then(function (val) {
-//     return val.json();
-//   })
-//   .then(function (val1) {
-//     var secondPromise = genObjectAsync.next(val1.title);
-//     secondPromise
-//       .then(function (val2) {
-//         return val2.json();
-//       })
-//       .then(function (val3) {
-//         genObjectAsync.next(val3.title);
-//       });
-//   });
+function* genFunctWithAsync() {
+  var post1title = yield fetch('https://jsonplaceholder.typicode.com/posts/1');
+  console.log(post1title);
+  var post2title = yield fetch('https://jsonplaceholder.typicode.com/posts/2');
+  console.log(post2title);
+}
+
+var genObjectAsync = genFunctWithAsync();
+var yieldedObject = genObjectAsync.next();
+var firstPromise = yieldedObject.value;
+firstPromise
+  .then(function (val) {
+    return val.json();
+  })
+    .then(function (val) {
+      var secondYieldedObject = genObjectAsync.next(val.title);
+      var secondPromise = secondYieldedObject.value;
+      secondPromise
+        .then(function (secondval) {
+          return secondval.json();
+        })
+          .then(function (secondval) {
+            genObjectAsync.next(secondval.title);
+          });
+    });
 
 // Recursive Method to Iterate through Promises
 console.log('--------------------------------------------');
@@ -218,9 +222,13 @@ function run(genRFunc) {
 }
 
 function *gen() {
-  var post1Stream = yield fetch('https://jsonplaceholder.typicode.com/posts/1');
-  var post1 = yield post1Stream.json();
-  console.log(post1.title);
+  var post3Stream = yield fetch('https://jsonplaceholder.typicode.com/posts/3');
+  var post3 = yield post3Stream.json();
+  console.log(post3.title);
+
+  var post4Stream = yield fetch('https://jsonplaceholder.typicode.com/posts/4');
+  var post4 = yield post4Stream.json();
+  console.log(post4.title);
 
   var number = yield 12345;
   console.log(number);
