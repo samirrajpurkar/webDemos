@@ -192,3 +192,53 @@ var myNameSpace = (function () {
     }
   };
 })();
+
+//basketModule returns an object with a public API we can use
+var basketModule = (function () {
+  //privates
+  var basket = [];
+
+  function doSomethingPrivate() {
+
+  }
+
+  function doSOmethingElsePrivate() {
+
+  }
+
+  // Return an object exposed to the public
+  return {
+    // Add items to the basket
+    addItem: function (values) {
+      basket.push(values);
+    },
+    // Get the count of items in the basket
+    getItemCount: function () {
+      return basket.length;
+    },
+    // Public alias to a private function
+    doSomething: doSomethingPrivate,
+    //Get total value of items in the basket
+    getTotal: function ( ) {
+      var total = 0;
+      var q = this.getItemCount();
+      while (q--) {
+        total += basket[q].price;
+      }
+      return total;
+    }
+
+  };
+})();
+
+basketModule.addItem({
+  item: 'bread',
+  price: 0.5
+});
+basketModule.addItem({
+  item: 'butter',
+  price: 0.3
+});
+console.log('basket Count : ', basketModule.getItemCount());
+console.log('basket Total : ', basketModule.getTotal());
+
