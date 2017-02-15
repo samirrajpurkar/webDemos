@@ -1,3 +1,4 @@
+
 // A car "class"
 function Car(model) {
   this.model = model;
@@ -242,3 +243,21 @@ basketModule.addItem({
 console.log('basket Count : ', basketModule.getItemCount());
 console.log('basket Total : ', basketModule.getTotal());
 
+// Module Pattern Validation
+//Global module
+var modulePatternValidation = (function (jQ, _) {
+  function privateMethod1() {
+    jQ('.container').html('test');
+  }
+
+  // function privateMethod2() {
+  //   console.log(__.min([10, 5, 100, 2, 1000]));
+  // }
+
+  return {
+    publicMethod: function () {
+      privateMethod1();
+    }
+  };
+})(jQuery, _);
+modulePatternValidation.publicMethod();
