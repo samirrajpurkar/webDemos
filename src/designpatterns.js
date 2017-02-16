@@ -245,19 +245,32 @@ console.log('basket Total : ', basketModule.getTotal());
 
 // Module Pattern Validation
 //Global module
-var modulePatternValidation = (function (jQ, _) {
-  function privateMethod1() {
-    jQ('.container').html('test');
-  }
+// var modulePatternValidation = (function (jQ, _) {
+//   function privateMethod1() {
+//     jQ('.container').html('test');
+//   }
 
-  // function privateMethod2() {
-  //   console.log(__.min([10, 5, 100, 2, 1000]));
-  // }
+//   // function privateMethod2() {
+//   //   console.log(__.min([10, 5, 100, 2, 1000]));
+//   // }
 
-  return {
-    publicMethod: function () {
-      privateMethod1();
-    }
+//   return {
+//     publicMethod: function () {
+//       privateMethod1();
+//     }
+//   };
+// })(jQuery, _);
+// modulePatternValidation.publicMethod();
+
+// Export Module
+var exportModule = (function () {
+  // Module Object
+  var module = {};
+  var privateVariable = 'Hello World';
+
+  function privateMethod() {
   };
-})(jQuery, _);
-modulePatternValidation.publicMethod();
+  
+
+  ) ();
+}
