@@ -264,13 +264,15 @@ console.log('basket Total : ', basketModule.getTotal());
 
 // Export Module
 var exportModule = (function () {
-  // Module Object
   var module = {};
   var privateVariable = 'Hello World';
 
   function privateMethod() {
+    //..
+  }
+  module.publicProperty = 'Foobar';
+  module.publicMethod = function () {
+    console.log(privateVariable);
   };
-  
-
-  ) ();
-}
+  return module;
+})();
