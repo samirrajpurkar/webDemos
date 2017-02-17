@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Generators</title>
+  <meta charset="utf-8">
+  <script type="text/javascript" src="./src/library.js"></script>
+</head>
+<body>
+  <h4 id="error"></h4>
+  <h3>Enter Film Number (1-7)</h3>
+  <input type="text" name="input" id="input">
+  <button id="searchButton">Search</button>
+  <p id="filmText">Film : </p>
+  <p id="charactersText">Characters : </p>
+
+<script type="text/javascript" src="./src/starwars.js"></script>
+</body>
+</html>
