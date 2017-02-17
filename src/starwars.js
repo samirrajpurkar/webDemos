@@ -29,9 +29,16 @@ function *gen() {
   var film = yield filmResponse.json();
 
   //fetch the characters
+  console.log(film.characters);
+  var charactersResponse = yield fetch(film.characters[0]);
+  var character = yield charactersResponse.json();
 
   //display film title and characters in the film
   document.getElementById('filmText').innerHTML = 'Film : ' + film.title;
+  document.getElementById('charactersText').innerHTML =
+                                        'Characters : <br>' +
+                                        character.name +
+                                        '<br>';
 }
 
 document.getElementById('searchButton').addEventListener('click',
@@ -46,4 +53,5 @@ document.getElementById('input').addEventListener('focus',
     function (event) {
       document.getElementById('error').innerHTML = '';
       document.getElementById('filmText').innerHTML = 'Film : ';
+      document.getElementById('charactersText').innerHTML = 'Characters : ';
     });
