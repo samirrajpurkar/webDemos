@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Observer Pattern</title>
+  <meta charset="utf-8">
+  <script type="text/javascript" src="./src/library.js"></script>
+</head>
+<body>
+  <input type="checkbox" id="mainCheckbox">Subject
+  <br>
+  <br>
+  <button id="addNewObserver">Add New Observer checkbox</button>
+  <div id="observersContainer"></div>
+
+<script type="text/javascript" src="./src/observer.js"></script>
+</body>
+</html>
