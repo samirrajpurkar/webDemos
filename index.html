@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Jquery Sub Pub Pattern</title>
+  <title>ajax Sub Pub Pattern</title>
   <meta charset="utf-8">
  <script
   src="https://code.jquery.com/jquery-3.1.1.slim.min.js"
@@ -12,48 +12,21 @@
   </script>
 </head>
 <body>
+  <form id="flickrSearch">
+    <input type="text" name="tag" id="query">
+    <input type="submit" name="submit" value="submit">
+  </form>
+  
+  <div id="lastQuery"></div>
+  <ol id="searchResults"></ol>
 
-  <script id="userTemplate" type="text/html">
-    <li><%= name %></li>
+   
+  <script id="resultTemplate" type="text/html">
+      <% _.each(items, function( item ){ %>
+          <li><img src="<%= item.media.m %>"/></li>
+      <% });%>
   </script>
 
-  <script id="ratingsTemplate" type="text/html">
-    <li><%= title %> was rated <%= rating %></li>
-  </script>
-
-  <div id="container">
-    <div class="sampleForm">
-      <p>
-        <label for="twitter_handle">Twitter handle:</label>
-        <input type="text" id="twitter_handle" />
-      </p>
-      <p>
-        <label for="movie_seen">Name a movie you have seen this year</label>
-        <input type="text" id="movie_seen" />
-      </p>
-      <p>
-        <label for="movie_rating">Rate the movie you saw:</label>
-        <select id="movie_rating">
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-        </select>
-      </p>
-      <p>
-        <button id="add">Submit Rating</button>
-      </p>
-    </div>
-
-    <div class="summaryTable">
-      <div id="users"><h3>Twitter Handler (Recent users)</h3></div>
-      <div id="ratings"><h3>Recent movies rated</h3></div>
-    </div>
-  </div>
-    
-
-
-<script type="text/javascript" src="./src/jquerypubsub.js"></script>
+<script type="text/javascript" src="./src/ajaxpubsub.js"></script>
 </body>
 </html>
