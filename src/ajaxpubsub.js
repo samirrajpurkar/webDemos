@@ -30,4 +30,28 @@
     $('#lastQuery')
       .html('<p> Searched for ' + tags + '</p>');
   });
+
+  // Subscribe to new tags being published and perform
+  // a search query using them. Once data has returned
+  // pubish this data for the rest of the applicaiton
+  // to consume
+  $.subscribe('/search/tags', function (e, tags) {
+    $.ajax('http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?',
+      {
+        tags: tags,
+        tagmode: 'any',
+        format: 'json'
+      },
+    function (data) {
+      if (!data.items.length) {
+        return;
+      }
+      $.publish('/search/resultSet', {items: data.items});
+    });
+  });
+
+  // Subscribe to the new results topic
+  $.subscribe('/search/resultSet', function (e, results) {
+    $('#searchResults').empty().append(resultTemplate(results));
+  });
 })(jQuery);
