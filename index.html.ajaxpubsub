@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ajax Sub Pub Pattern</title>
+  <meta charset="utf-8">
+  <script
+  src="https://code.jquery.com/jquery-3.1.1.js"
+  integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA="
+  crossorigin="anonymous">
+  </script> 
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js">  
+  </script>
+</head>
+<body>
+  <form id="flickrSearch">
+    <input type="text" name="tag" id="query">
+    <input type="submit" name="submit" value="submit">
+  </form>
+  
+  <div id="lastQuery"></div>
+  <ol id="searchResults"></ol>
+
+   
+  <script id="resultTemplate" type="text/html">
+      <% _.each(items, function( item ){ %>
+          <li><img src="<%= item.media.m %>"/></li>
+      <% });%>
+  </script>
+
+<script type="text/javascript" src="./src/ajaxpubsub.js"></script>
+</body>
+</html>
