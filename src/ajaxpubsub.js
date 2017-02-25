@@ -30,6 +30,7 @@
     $('#lastQuery')
       .html('<p> Searched for ' + tags + '</p>');
   });
+
   $.subscribe('/search/tags', function (e, tags ) {
     $.getJSON( 'http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?', {
       tags: tags,
