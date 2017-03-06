@@ -16,6 +16,12 @@ var Superhero = function (firstName, lastName, powers) {
   console.log(this);
   Person.call(this, firstName, lastName);
 
+//The Superhero constructor creates an object which descents from
+// Person. Objects of this type have attibutes of the objects
+// that are above it in the chain and if we had set default values in the Person
+// object, Superhero is capable of overriding any inherited
+// valueswith values specific to its object.
+
   // Finally, store their powers, a new array of traits not found
   // in a normal Person
   this.powers = powers;
