@@ -31,3 +31,42 @@ Superhero.prototype = Object.create(Person.prototype);
 
 var superman = new Superhero('Clark', 'Kent', ['flight', 'heat-vision']);
 console.log(superman);
+
+// Mixin containing utility functions in a standard object literal.
+var myMixins = {
+  moveUp: function () {
+    console.log('move up');
+  },
+  moveDown: function () {
+    console.log('move down');
+  },
+  stop: function () {
+    console.log('stop....!');
+  }
+};
+// A skeleton CarAnimator constructor
+function CarAnimator() {
+  this.moveLeft = function () {
+    console.log('move left');
+  };
+}
+
+// A skeleton personAnimator constructor
+function PersonAnimator() {
+  this.moveRandomly = function () {
+    console.log('move randomly');
+  };
+}
+
+// extend both constructors with our Mixin
+_.extend(CarAnimator.prototype, myMixins);
+//_.extend(PersonAnimator.prototype, myMixins);
+
+var myCarAnimator = new CarAnimator();
+console.log(myCarAnimator);
+myCarAnimator.moveLeft();
+myCarAnimator.moveDown();
+myCarAnimator.stop();
+
+var myPersonAnimator = new PersonAnimator();
+console.log(myPersonAnimator);
