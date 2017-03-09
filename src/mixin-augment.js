@@ -26,3 +26,5 @@ Mixin.prototype = {
   }
 };
 
+// Extend an existing object with method from another
+
