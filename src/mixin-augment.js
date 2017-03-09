@@ -27,4 +27,8 @@ Mixin.prototype = {
 };
 
 // Extend an existing object with method from another
+function augment(receivingClass, givingClass) {
+  console.log(arguments);
+}
 
+augment(Car, Mixin);
