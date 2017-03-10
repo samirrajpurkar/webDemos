@@ -28,7 +28,30 @@ Mixin.prototype = {
 
 // Extend an existing object with method from another
 function augment(receivingClass, givingClass) {
-  console.log(arguments);
+  //console.log(arguments);
+  // only provide certain methods
+  if (arguments[2]) {
+    for (var i = 2, len = arguments.length; i < len; i++ ) {
+      receivingClass.prototype[arguments[i]]
+          = givingClass.prototype[arguments[i]];
+    }
+  }
+  else { // provide all methods
+    for (var methodName in givingClass.prototype) {
+      if (methodName) {
+        console.log(methodName);
+        if (!Object.hasOwnProperty.call(receivingClass.prototype, methodName)) {
+          receivingClass.prototype[methodName] = givingClass.prototype[methodName];
+        }
+      }
+    }
+  }
 }
 
-augment(Car, Mixin);
+function test() {
+  //augment(Car, Mixin, 'driveForward', 'driveBackward', 'driveSideways');
+  augment(Car, Mixin);
+}
+
+// Test the module
+test();
