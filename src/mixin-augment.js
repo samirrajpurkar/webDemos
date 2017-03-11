@@ -39,8 +39,12 @@ function augment(receivingClass, givingClass) {
   else { // provide all methods
     for (var methodName in givingClass.prototype) {
       if (methodName) {
-        console.log(methodName);
+        //console.log(methodName);
         if (!Object.hasOwnProperty.call(receivingClass.prototype, methodName)) {
+          receivingClass.prototype[methodName] = givingClass.prototype[methodName];
+        }
+        //  Alternatively (check prototype chain as well):
+        if (!receivingClass.prototype[methodName]) {
           receivingClass.prototype[methodName] = givingClass.prototype[methodName];
         }
       }
@@ -54,4 +58,33 @@ function test() {
 }
 
 // Test the module
-test();
+//test();
+
+// Run
+function run() {
+  // Augment the Car constructor to include 'driveForward' and 'driveBackward'
+  augment(Car, Mixin, 'driveForward', 'driveBackward');
+  // Create a new Car
+  var myCar = new Car({
+    model: 'Ford Escort',
+    color: 'blue'
+  });
+  //Test to make sure we now have access to the methods
+  console.log('My Car : ', myCar);
+  myCar.driveForward();
+  myCar.driveBackward();
+
+  // We can also augment Car to include all functions from our mixin
+  // by not explicity listing a selection of them
+  augment(Car, Mixin);
+
+  var mySportsCar = new Car({
+    model: 'Porshe',
+    color: 'red'
+  });
+  console.log(mySportsCar);
+
+  mySportsCar.driveSideways();
+}
+
+run();
