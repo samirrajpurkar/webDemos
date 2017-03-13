@@ -30,3 +30,7 @@ console.log(truck);
 // Demonstrate 'vehicle' is still unaltered
 var secondInstance = new Vehicle('car');
 console.log(secondInstance);
+
+// This type of simplistic implementation is functional, but it doesn't
+// really demonstrate all of the strengths Decorators have to offer.
+
