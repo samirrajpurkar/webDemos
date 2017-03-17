@@ -86,3 +86,5 @@ function letFunc() {
 
 console.log('varFunc', varFunc());
 console.log('letFunc', letFunc());
+
+// Default values for Function Paramater in ES6
