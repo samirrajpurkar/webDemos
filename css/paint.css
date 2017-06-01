@@ -11,3 +11,9 @@ span > p {
   display: inline;
 }
 
+.picturepanel {
+  border: solid;
+  border-width: 1px;
+  border-color: grey;
+}
+
