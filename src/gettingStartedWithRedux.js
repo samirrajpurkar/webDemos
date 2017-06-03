@@ -169,7 +169,26 @@ const todos = (state = [], action) => {
   }
 };
 
-const storeTodos = createStore(todos);
+const visibilityFilter = (state = 'SHOW_ALL', action) => {
+  switch (action.type) {
+  case 'SET_VISIBILITY_FILTER':
+    return action.filter;
+  default:
+    return state;
+  }
+};
+
+const {combineReducers} = Redux;
+
+const todoApp = combineReducers({todos, visibilityFilter});
+// const todoApp = (state = { }, action) => {
+//   return {
+//     todos: todos(state.todos, action),
+//     visibilityFilter: visibilityFilter(state.visibilityFilter, action)
+//   };
+// };
+
+const storeTodos = createStore(todoApp);
 
 console.log('Initial state');
 console.log(storeTodos.getState());
@@ -190,6 +209,24 @@ storeTodos.dispatch({
   type: 'ADD_TODO',
   id: 1,
   text: 'Clean the house'
+});
+console.log('Current State:');
+console.log(storeTodos.getState());
+console.log('-------------');
+
+console.log('Dispatching TOGGLE_TODO on id 0');
+storeTodos.dispatch({
+  type: 'TOGGLE_TODO',
+  id: 0
+});
+console.log('Current State:');
+console.log(storeTodos.getState());
+console.log('-------------');
+
+console.log('Dispatching SET_VISIBILITY_FILTER');
+storeTodos.dispatch({
+  type: 'SET_VISIBILITY_FILTER',
+  filter: 'SHOW_COMPLETED'
 });
 console.log('Current State:');
 console.log(storeTodos.getState());
