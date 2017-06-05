@@ -47,8 +47,11 @@ const store = createStore(todoApp);
 const {Component} = React;
 let nextTodoId = 0;
 
-const FilterLink = ({filter, children}) => {
-  console.log(filter, children);
+const FilterLink = ({filter, currentFilter, children}) => {
+  console.log(filter, currentFilter, children);
+  if (currentFilter === filter) {
+    return(<span>{children}</span>)
+  }
   return(
     <a href='#'
        onClick={e => {
@@ -62,7 +65,8 @@ const FilterLink = ({filter, children}) => {
       {children}
     </a>
   )
-}
+};
+
 const getVisibileTodos = (
   todos,
   filter
@@ -82,7 +86,8 @@ const getVisibileTodos = (
 class TodoApp extends Component {
   render () {
     console.log(store.getState());
-    const visibileTodos = getVisibileTodos(this.props.todos, this.props.visibilityFilter);
+    const {todos, visibilityFilter} = this.props;
+    const visibileTodos = getVisibileTodos(todos, visibilityFilter);
     return(
       <div>
         <input ref = {node => {this.input = node}}/>
@@ -114,17 +119,17 @@ class TodoApp extends Component {
           Show:
           {' '}
           <FilterLink
-            filter='SHOW_ALL'>
+            filter='SHOW_ALL' currentFilter={visibilityFilter}>
             All
           </FilterLink>
           {' '}
           <FilterLink
-            filter='SHOW_ACTIVE'>
+            filter='SHOW_ACTIVE' currentFilter={visibilityFilter}>
             Active
           </FilterLink>
           {' '}
           <FilterLink
-            filter='SHOW_COMPLETED'>
+            filter='SHOW_COMPLETED' currentFilter={visibilityFilter}>
             Completed
           </FilterLink>
         </p>
