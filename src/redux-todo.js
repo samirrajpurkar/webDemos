@@ -83,6 +83,52 @@ const getVisibileTodos = (
   }
 }
 
+const Todo = ({
+  onClick,
+  completed,
+  text
+}) => (
+  <li
+    onClick={onClick}
+    style={{textDecoration: completed ? 'line-through' : 'none'}}>
+    {text}
+</li>
+)
+
+const TodoList = ({
+  todos,
+  onTodoClick
+}) => (
+  <ul>
+    {todos.map(todo =>
+      <Todo
+        key={todo.id}
+        {...todo}
+        onClick={() => onTodoClick(todo.id)}
+      />
+    )}
+  </ul>
+)
+
+const AddTodo = ({
+  onAddTodo
+}) => {
+  let input;
+  return (
+    <div>
+      <input ref = {node => {input = node}}/>
+      <button
+        onClick={() => {
+          onAddTodo(input.value);
+          input.value='';
+        }}
+      >
+        Add ToDo
+      </button>
+  </div>
+  );
+}
+
 class TodoApp extends Component {
   render () {
     console.log(store.getState());
@@ -90,31 +136,23 @@ class TodoApp extends Component {
     const visibileTodos = getVisibileTodos(todos, visibilityFilter);
     return(
       <div>
-        <input ref = {node => {this.input = node}}/>
-        <button onClick={() => {
-          store.dispatch({
-            type: 'ADD_TODO',
-            text: this.input.value,
-            id: nextTodoId++
-          });
-          this.input.value='';
-        }}>
-          Add ToDo
-        </button>
-        <ul>
-          {visibileTodos.map(todo => (
-            <li
-              key={todo.id}
-              onClick={() => {
-                store.dispatch({
-                  type: 'TOGGLE_TODO',
-                  id: todo.id
-                });
-              }}
-              style={{textDecoration: todo.completed ? 'line-through' : 'none'}}>
-              {todo.text}
-          </li>))}
-        </ul>
+        <AddTodo
+          onAddTodo={text => {
+            store.dispatch({
+              type: 'ADD_TODO',
+              id: nextTodoId++,
+              text: text
+            })
+          }}
+        />
+        <TodoList
+          todos={visibileTodos}
+          onTodoClick={id =>
+            store.dispatch({
+              type: 'TOGGLE_TODO',
+              id
+            })
+          } />
         <p>
           Show:
           {' '}
